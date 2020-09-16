@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.shubhi.smartreceipt.mail.MailHelper;
 import com.shubhi.smartreceipt.model.Invoice;
 import com.shubhi.smartreceipt.model.Product;
 import com.shubhi.smartreceipt.model.Purchase;
@@ -71,7 +72,12 @@ public class InvoiveController {
 	@GetMapping("/invoice/send/{id}")
 	public String sendInvoice(Model model, @PathVariable Integer id) {
 		User user = invoiceService.getInvoice(id).getUser();
+		try {
+			MailHelper mail = new MailHelper();
+			mail.sendMail(user.getEmail(), "The Invoice details");
+		} catch (Exception e) {
 
+		}
 		return "redirect:/invoice/" + id;
 	}
 
