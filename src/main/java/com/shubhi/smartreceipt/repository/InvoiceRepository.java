@@ -1,8 +1,17 @@
 package com.shubhi.smartreceipt.repository;
 
-/**
- * @author Bhuvaneshvar
- * @date 9/15/2020
- */
-public class InvoiceRepository {
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.shubhi.smartreceipt.model.Invoice;
+import com.shubhi.smartreceipt.model.User;
+
+@Repository
+public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
+
+	@Query("from invoice where user = ?1")
+	List<Invoice> getInvoiceOfUser(User id);
 }
